@@ -20,6 +20,7 @@ export interface ArenaKeyMetadata {
   name: string
   readinessScore: number
   symbol: string
+  uri: string
 }
 
 export interface BossGate {
@@ -109,5 +110,6 @@ export function createArenaKeyMetadata({
     name: `ArenaKeys 089: ${archetype.title} vs ${bossGate.boss}`,
     readinessScore,
     symbol: 'AK089',
+    uri: `${origin}/metadata/${slug}.json`,
   }
 }

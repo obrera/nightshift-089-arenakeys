@@ -2,18 +2,20 @@ import { Check, Circle, ExternalLink, ShieldAlert } from 'lucide-react'
 
 import { Button } from '@/core/ui/button'
 
+import type { ArenaKeyMintProof } from '../data-access/use-arenakeys-proof-signature'
+
 export function ArenaKeysUiReadinessPanel({
   checks,
   isSigning,
   mintReady,
-  signature,
+  proof,
   signDevnetProof,
 }: {
   checks: { label: string; passed: boolean }[]
   isSigning: boolean
   mintReady: boolean
-  signature: string | undefined
-  signDevnetProof: () => Promise<string>
+  proof: ArenaKeyMintProof | undefined
+  signDevnetProof: () => Promise<ArenaKeyMintProof | undefined>
 }) {
   return (
     <section className="grid gap-4 border border-white/10 bg-zinc-950/80 p-5 lg:grid-cols-[1fr_auto]">
@@ -37,20 +39,31 @@ export function ArenaKeysUiReadinessPanel({
             </div>
           ))}
         </div>
-        {signature ? (
-          <a
-            className="mt-4 inline-flex items-center gap-2 text-sm text-cyan-200 underline-offset-4 hover:underline"
-            href={`https://explorer.solana.com/tx/${signature}?cluster=devnet`}
-            rel="noreferrer"
-            target="_blank"
-          >
-            {signature.slice(0, 12)}...{signature.slice(-8)}
-            <ExternalLink size={14} />
-          </a>
+        {proof ? (
+          <div className="mt-4 flex flex-wrap gap-4 text-sm">
+            <a
+              className="inline-flex items-center gap-2 text-cyan-200 underline-offset-4 hover:underline"
+              href={`https://explorer.solana.com/address/${proof.assetAddress}?cluster=devnet`}
+              rel="noreferrer"
+              target="_blank"
+            >
+              NFT {proof.assetAddress.slice(0, 10)}...{proof.assetAddress.slice(-8)}
+              <ExternalLink size={14} />
+            </a>
+            <a
+              className="inline-flex items-center gap-2 text-emerald-200 underline-offset-4 hover:underline"
+              href={`https://explorer.solana.com/tx/${proof.signature}?cluster=devnet`}
+              rel="noreferrer"
+              target="_blank"
+            >
+              tx {proof.signature.slice(0, 10)}...{proof.signature.slice(-8)}
+              <ExternalLink size={14} />
+            </a>
+          </div>
         ) : null}
       </div>
       <Button className="self-end rounded-sm" disabled={!mintReady || isSigning} onClick={() => void signDevnetProof()}>
-        {isSigning ? 'Signing proof' : 'Sign devnet proof'}
+        {isSigning ? 'Minting ArenaKey' : 'Mint devnet ArenaKey'}
       </Button>
     </section>
   )

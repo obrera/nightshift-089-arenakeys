@@ -6,8 +6,8 @@ ArenaKeys 089 is a dark-mode Solana game app for preparing a boss run with colle
 
 - Character archetype selection across collectible ArenaKey drops.
 - Arena and boss key configuration with generated metadata and SVG art routes.
-- Wallet UI connection, SIWS-oriented wallet surface, holder readiness checks, and devnet proof signing.
-- Wallet/local-keypair signed devnet MPL Core asset mint proof using `@obrera/mpl-core-kit-lib` and `@solana/kit`.
+- Wallet UI connection, SIWS-oriented wallet surface, holder readiness checks, and connected-wallet devnet minting.
+- Wallet-signed MPL Core asset minting in the UI using `@obrera/mpl-core-kit-lib` and `@solana/kit`; the script mirrors the same mint instruction with a local proof keypair.
 
 ## Scripts
 
@@ -34,12 +34,12 @@ The Bun server serves Vite `dist` plus:
 
 `/home/obrera/keys/obrE1BHvP4EX8PkxPxAJxYfQkgfgCmXyJadQA3yBb7G.json`
 
-It mints an MPL Core asset on devnet and prints the asset address and transaction signature. There is no server mint path.
+It mints an MPL Core asset on devnet with the same shared ArenaKey create instruction used by the UI, then prints the asset address and transaction signature. There is no server mint path.
 
 Latest proof from this build:
 
-- Asset: `8JJBAJQndAXB8ag7Sm7DxBLQdRkDLettrkDFHZ1FZPdQ`
-- Transaction: `4ko119ucnDMjt7uhpLkxeGNTH3JXKeJirsviEcmJFgrZymytpyVm47yeAgYy8iVeouoXfmN72j6FWW2fGbUgvG2T`
+- Asset: `7FiMu61CA1J49M8gLEJViC4bxigsY2UbkKa8Skk92Qxs`
+- Transaction: `65BKaEmhnwarGp2AMpGAvK6PtXFQgxKQU6re1oYgPcrHy33tCMtf33G8dfdYWYw7GqKEXbBDKgMcJTxEivSjcW7e`
 
 ## Deployment
 

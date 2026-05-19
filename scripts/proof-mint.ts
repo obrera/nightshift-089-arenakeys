@@ -1,4 +1,3 @@
-import { getCreateV1Instruction } from '@obrera/mpl-core-kit-lib/generated'
 import {
   type Address,
   appendTransactionMessageInstruction,
@@ -15,6 +14,9 @@ import {
   setTransactionMessageLifetimeUsingBlockhash,
   signTransactionMessageWithSigners,
 } from '@solana/kit'
+
+import { getArenaKeyCreateInstruction } from '../src/arenakeys/data-access/arenakeys-mint'
+import { createArenaKeyMetadata } from '../src/arenakeys/util/arenakeys-domain'
 
 const keypairPath = '/home/obrera/keys/obrE1BHvP4EX8PkxPxAJxYfQkgfgCmXyJadQA3yBb7G.json'
 const rpc = createSolanaRpc('https://api.devnet.solana.com')
@@ -39,14 +41,15 @@ async function main() {
   }
 
   const { value: latestBlockhash } = await rpc.getLatestBlockhash({ commitment: 'confirmed' }).send()
-  const instruction = getCreateV1Instruction({
+  const metadata = createArenaKeyMetadata({
+    archetypeId: 'cipher-vanguard',
+    bossGateId: 'circuit',
+    domain: 'https://arenakeys089.colmena.dev',
+  })
+  const instruction = getArenaKeyCreateInstruction({
     asset,
-    authority: payer,
-    name: 'ArenaKeys 089 Devnet Proof',
-    owner: payer.address,
+    metadata,
     payer,
-    updateAuthority: payer.address,
-    uri: 'https://arenakeys089.colmena.dev/metadata/cipher-vanguard-circuit.json',
   })
   const message = pipe(
     createTransactionMessage({ version: 0 }),

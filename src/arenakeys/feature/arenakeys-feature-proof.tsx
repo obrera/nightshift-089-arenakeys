@@ -24,10 +24,10 @@ export function ArenaKeysFeatureProof({
         checks={checks}
         isSigning={false}
         mintReady={false}
-        signature={undefined}
+        proof={undefined}
         signDevnetProof={async () => {
-          toast.error('Connect a wallet before signing the ArenaKeys proof.')
-          return ''
+          toast.error('Connect a wallet before minting the ArenaKey.')
+          return undefined
         }}
       />
     )
@@ -51,13 +51,13 @@ function ArenaKeysFeatureConnectedProof({
 
   async function signDevnetProof() {
     try {
-      const signature = await proof.signDevnetProof()
-      toast.success('ArenaKeys devnet proof signed.')
+      const mintProof = await proof.signDevnetProof()
+      toast.success('ArenaKey NFT minted on devnet.')
 
-      return signature
+      return mintProof
     } catch (error) {
       toast.error(error instanceof Error ? error.message : String(error))
-      return ''
+      return undefined
     }
   }
 
@@ -66,7 +66,7 @@ function ArenaKeysFeatureConnectedProof({
       checks={checks}
       isSigning={proof.isSigning}
       mintReady={mintReady}
-      signature={proof.signature}
+      proof={proof.proof}
       signDevnetProof={signDevnetProof}
     />
   )
