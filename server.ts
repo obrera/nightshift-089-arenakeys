@@ -23,6 +23,16 @@ function normalizeArchetypeId(slug: string): ArchetypeId {
   return arenaKeyArchetypes.find((item) => slug.startsWith(item.id))?.id ?? 'cipher-vanguard'
 }
 
+function publicOrigin(request: Request) {
+  const url = new URL(request.url)
+  const forwardedHost = request.headers.get('x-forwarded-host')
+  const host = forwardedHost ?? request.headers.get('host') ?? url.host
+  const forwardedProto = request.headers.get('x-forwarded-proto')
+  const protocol = forwardedProto === 'http' ? 'http' : 'https'
+
+  return `${protocol}://${host}`
+}
+
 function renderArenaKeySvg(slug: string) {
   const [, bossGateId = 'circuit'] = slug.replace(/\.svg$/, '').split('-')
   const archetype = arenaKeyArchetypes.find((item) => item.id === normalizeArchetypeId(slug)) ?? arenaKeyArchetypes[0]
@@ -76,7 +86,7 @@ Bun.serve({
         createArenaKeyMetadata({
           archetypeId: normalizeArchetypeId(slug),
           bossGateId: bossGates.find((item) => slug.endsWith(item.id))?.id ?? 'circuit',
-          domain: url.origin,
+          domain: publicOrigin(request),
         }),
       )
     }

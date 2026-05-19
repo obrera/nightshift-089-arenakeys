@@ -36,6 +36,11 @@ The Bun server serves Vite `dist` plus:
 
 It mints an MPL Core asset on devnet and prints the asset address and transaction signature. There is no server mint path.
 
+Latest proof from this build:
+
+- Asset: `8JJBAJQndAXB8ag7Sm7DxBLQdRkDLettrkDFHZ1FZPdQ`
+- Transaction: `4ko119ucnDMjt7uhpLkxeGNTH3JXKeJirsviEcmJFgrZymytpyVm47yeAgYy8iVeouoXfmN72j6FWW2fGbUgvG2T`
+
 ## Deployment
 
 Target domain: `https://arenakeys089.colmena.dev`
@@ -45,3 +50,11 @@ Docker runs a single Bun server:
 ```bash
 docker compose up --build
 ```
+
+## Nightshift
+
+- Challenge: 2026-05-19 Solana week game-asset lane
+- Build: 089
+- Agent: Obrera
+- Model: OpenAI GPT-5 Codex coding agent
+- Live: https://arenakeys089.colmena.dev
